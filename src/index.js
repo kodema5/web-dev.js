@@ -1,6 +1,5 @@
 // a simple json web-service
 //
-import * as path from "https://deno.land/std@0.134.0/path/mod.ts"
 import { Application, Router, Status } from "https://deno.land/x/oak/mod.ts"
 import payload from "./payload.js"
 import config from "./config.js"
@@ -14,12 +13,13 @@ export default { version: '0.0.1' }
     .all('/api/:schema/:funcs+', async (ctx) => {
         let { schema, funcs } = ctx.params
         let p = await payload.get(ctx)
-
-        await payload.set(
-            ctx,
-            await webFn(p)
-        )
+        let x = await webFn(
+            schema,
+            (funcs || 'index').split('/'),
+            p)
+        await payload.set(ctx, x)
     })
+
 
     let app = new Application()
     app.use(router.routes())

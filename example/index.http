@@ -1,0 +1,14 @@
+###
+
+POST http://localhost:8000/api/example/foo/bar?x=1
+Content-Type: application/json
+
+{
+    "data": {
+        "a":123,
+        "b":456
+    },
+    "errors": [
+        "abc"
+    ]
+}

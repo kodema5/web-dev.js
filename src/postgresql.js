@@ -17,23 +17,14 @@ export default sql
 
 // calls schema.funcs(param::jsonb)
 //
-export let webFn = async (schema, funcs, param, {
-    payload=true,   // interogate for 'data' | 'errors'
-                    // otherwise wraps as {data}
-                    // see payload.js
-} = {}) => {
+export let webFn = async (schema, funcs, param) => {
     try {
-        let fn = `${schema}.${funcs.join('_')}`
-        let rs = await sql`select ${sql(fn)}(${sql.json(param)}) as a`
-
-        let val = rs[0].a
-        if (!payload) return val
-
-        // checks if it is a payload-type
+        // web-function's prefixed with web_*
         //
-        if ('data' in val || 'errors' in val) return val
+        let fn = `${schema}.web_${funcs.join('_')}`
 
-        return { data:val }
+        let rs = await sql`select ${sql(fn)}(${sql.json(param)}) as a`
+        return (rs[0] || {}).a
 
     } catch(e) {
         let n = e.name
