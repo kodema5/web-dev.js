@@ -10,6 +10,7 @@ import { parse } from "https://deno.land/std@0.134.0/flags/mod.ts";
 
 let flags = {
     p: 'PORT',
+    debug: 'PGDEBUG',
 }
 
 let values = Object.assign(
@@ -26,7 +27,7 @@ let values = Object.assign(
         PGPOOLSIZE: 10,
         PGIDLE_TIMEOUT: 0,      // in s
         PGCONNECT_TIMEOUT: 30,  // in s
-
+        PGDEBUG: false,         // displays sql and params
         PGCALLBACK_CHANNEL:     // callback channel
             'web-dev-callback',
     },

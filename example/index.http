@@ -7,8 +7,5 @@ Content-Type: application/json
     "data": {
         "a":123,
         "b":456
-    },
-    "errors": [
-        "abc"
-    ]
+    }
 }

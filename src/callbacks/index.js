@@ -6,11 +6,13 @@ import config from '../config.js'
 // various handlers
 //
 import echo from './echo.js'
+import exec from './exec.js'
 import fetch from './fetch.js'
 import notify from './notify.js'
 
 let handlers = {
     echo,
+    exec,
     fetch,
     notify,
 }
@@ -56,4 +58,3 @@ export default handlers
         }
     )
 })()
-

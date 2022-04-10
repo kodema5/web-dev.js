@@ -29,6 +29,7 @@ as $$
 declare
     req example.web_payload_t = jsonb_populate_record(null::example.web_payload_t, x);
 begin
+    -- raise exception 'error.error';
     req._headers = null;
     return jsonb_strip_nulls(to_jsonb(req));
 end;
