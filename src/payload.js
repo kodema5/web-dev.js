@@ -16,6 +16,7 @@ export let get = async (ctx) => {
         let body = req.body()
 
         type = body.type
+
         if (type==='form') // application/x-www-form-urlencoded
         {
             data = Object.fromEntries((await body.value).entries())
@@ -65,7 +66,6 @@ export let isEmpty = (a) => (a==null)
 //
 export let set = async (ctx, obj) => {
     let res = ctx.response
-
     // return directly if not an object
     //
     if (!isObject(obj)) {
@@ -90,14 +90,13 @@ export let set = async (ctx, obj) => {
         flags: {}
     })
 
-
     // build payload { data, errors } response
     //
-    let { data, errors } = ('data' in payload || 'errors' in payload)
+    let { data, errors } = ('data' in payload || 'errors' in payload )
         ? payload
         : ({ data: payload })
 
-    res.body = Object.assign({}, errors && { errors }, data && {data})
+    res.body = Object.assign({}, errors && { errors }, data && { data })
 
 
     // process flags

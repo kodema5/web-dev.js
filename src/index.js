@@ -4,8 +4,10 @@ import { Application, Router, Status } from "https://deno.land/x/oak/mod.ts"
 import payload from "./payload.js"
 import config from "./config.js"
 import { webFn } from "./postgresql.js"
+import './callbacks/index.js'
 
-export default { version: '0.0.1' }
+export default '0.0.1'
+
 
 ;(async () => {
 
@@ -40,5 +42,4 @@ export default { version: '0.0.1' }
     console.log(`web-dev.js serving ${Deno.cwd()} at ${config.PORT}`)
     await app.listen(`127.0.0.1:${config.PORT}`)
 })()
-
 

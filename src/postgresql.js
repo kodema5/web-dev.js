@@ -1,6 +1,8 @@
 import postgres from 'https://deno.land/x/postgresjs/mod.js'
 import config from './config.js'
 
+console.log(`web-dev.js connects to postgres://${config.PGHOST}:${config.PGPORT}/${config.PGDATABASE}`)
+
 const sql = postgres({
     host: config.PGHOST,
     port: config.PGPORT,

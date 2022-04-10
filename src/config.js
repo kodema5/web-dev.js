@@ -12,20 +12,23 @@ let flags = {
     p: 'PORT',
 }
 
-
 let values = Object.assign(
     // application default values
     //
     {
-        PORT: 8000,
-        PGHOST: 'localhost',
+        PORT: 8000,             // listens to
+
+        PGHOST: 'localhost',    // pg connections
         PGPORT: 5432,
         PGDATABASE: 'web',
         PGUSER: 'web',
         PGPASSWORD: 'rei',
         PGPOOLSIZE: 10,
-        PGIDLE_TIMEOUT: 0,
-        PGCONNECT_TIMEOUT: 30,
+        PGIDLE_TIMEOUT: 0,      // in s
+        PGCONNECT_TIMEOUT: 30,  // in s
+
+        PGCALLBACK_CHANNEL:     // callback channel
+            'web-dev-callback',
     },
 
     // read from .env / .env.defaults

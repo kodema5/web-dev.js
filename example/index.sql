@@ -13,6 +13,7 @@ create type example.web_payload_t as (
     _headers jsonb,  -- headers
     _query jsonb,    -- querystring
     _type text,      -- form, form-data, text (as json), json
+
     data jsonb,      -- data
     errors jsonb     -- usually for response
 );
@@ -28,7 +29,8 @@ as $$
 declare
     req example.web_payload_t = jsonb_populate_record(null::example.web_payload_t, x);
 begin
-    return to_jsonb(req);
+    req._headers = null;
+    return jsonb_strip_nulls(to_jsonb(req));
 end;
 $$;
 
