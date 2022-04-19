@@ -43,7 +43,7 @@ export default '0.0.1'
         ctx.response.body = `"${ctx.request.url}" not found`
     })
 
-    console.log(`web-dev.js serving ${Deno.cwd()} at ${config.PORT}\n`)
+    console.log(`web-dev.js serving ${Deno.cwd()} at ${config.PORT}\npress ^C to exit\n`)
     await app.listen(`127.0.0.1:${config.PORT}`)
 })()
 
