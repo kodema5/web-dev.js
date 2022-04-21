@@ -18,8 +18,7 @@ const sql = postgres({
         console.debug(
             'debug>',
             query,
-            '\nparams:', params,
-            '\n')
+            '\ninput:', params)
     }),
 
 })
@@ -46,7 +45,11 @@ export let callFn = async (fn, ...params) => {
         // use unsafe call to pass the ps
         //
         let rs = await sql.unsafe(s, ps)
-        return (rs[0] || {}).a
+        let r = (rs[0] || {}).a
+        if (config.PGDEBUG) {
+            console.debug('output:', r, '\n')
+        }
+        return r
 
     } catch(e) {
 
@@ -57,7 +60,7 @@ export let callFn = async (fn, ...params) => {
             e
 
         if (config.PGDEBUG) {
-            console.error(e, '\n')
+            console.error('error:', e, '\n')
         }
 
         return { errors }
