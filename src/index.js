@@ -11,16 +11,18 @@ export default '0.0.1'
 
 ;(async () => {
 
+    // ex: --PGFUNC="web_{schema}.{func}"
+    let funcFmt = config.PGFUNC || '{schema}.web_{func}'
+
     let router = new Router()
     .all('/api/:schema/:funcs+', async (ctx) => {
         let { schema, funcs } = ctx.params
         let p = await payload.get(ctx)
 
-        // fn has specific is prefixed with web_*
-        //
-        let fn = `${schema}.web_${
-            (funcs || 'index').split('/').join('_')
-        }`
+        let fn = funcFmt
+            .replaceAll('{schema}', schema)
+            .replaceAll('{func}',
+                (funcs || 'index').split('/').join('_'))
         let x = await callFn(fn, p)
 
         await payload.set(ctx, x)
