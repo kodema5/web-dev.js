@@ -1,3 +1,5 @@
+// DEPRECATED. use pg_sidecar.js instead
+
 // a callback service that listens to a pg-channel
 //
 import sql from '../postgresql.js'

@@ -1,11 +1,11 @@
 -- an example
 
-drop schema if exists example cascade;
-create schema example;
+create schema if not exists web;
 
 -- the model for payload
 --
-create type example.web_payload_t as (
+drop type if exists web.example_foo_t cascade;
+create type web.example_foo_t as (
     _method text,    -- POST, GET, ....
     _origin text,    -- ip
     _url text,       -- original url
@@ -20,19 +20,25 @@ create type example.web_payload_t as (
 
 --
 --
-create function example.web_foo_bar(
+create or replace function web.example_foo(
     x jsonb
 )
     returns jsonb
     language plpgsql
 as $$
 declare
-    req example.web_payload_t = jsonb_populate_record(null::example.web_payload_t, x);
+    req web.example_foo_t = jsonb_populate_record(null::web.example_foo_t, x);
+    res jsonb;
 begin
     -- raise exception 'error.error';
-    req._headers = null;
-    return jsonb_strip_nulls(to_jsonb(req));
+
+    res = jsonb_build_object(
+        '_headers', jsonb_build_object('auth', 'abc'),
+        'data', req.data
+    )
+
+    return return res;
 end;
 $$;
 
-select example.web_foo_bar(jsonb_build_object('a', 123));
+select web.example_foo(jsonb_build_object('data', 123));

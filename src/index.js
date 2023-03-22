@@ -4,15 +4,17 @@ import { Application, Router, Status } from "https://deno.land/x/oak/mod.ts"
 import payload from "./payload.js"
 import config from "./config.js"
 import { callFn } from "./postgresql.js"
-import './callbacks/index.js'
 
-export default '0.0.1'
+// DEPRECATED
+// import './callbacks/index.js'
+
+export default '0.0.2'
 
 
 ;(async () => {
 
-    // ex: --PGFUNC="web_{schema}.{func}"
-    let funcFmt = config.PGFUNC || '{schema}.web_{func}'
+    // ex: --PGFUNC="{schema}.web_{func}"
+    let funcFmt = config.PGFUNC || 'web.{schema}_{func}'
 
     let router = new Router()
     .all('/api/:schema/:funcs+', async (ctx) => {
